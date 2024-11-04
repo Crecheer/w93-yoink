@@ -1,8 +1,13 @@
 name: "Make Yoink Installers"
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - main
+    tags:
+      - v*
 jobs:
   what-do-i-name-this:
-    name: "Make installer (regular)"
+    name: "Make installers"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -19,6 +24,13 @@ jobs:
           npm install
           node make -o ../installer-regular.js
           cd ..
+      - name: Upload regular installer
+        uses: meeDamian/github-release@2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: installer-regular.js
+          allow_override: true
+          gzip: false
       - name: Clone wizard generator
         uses: GuillaumeFalourd/clone-github-repo-action@v2.1
         with:
@@ -30,12 +42,10 @@ jobs:
           npm install
           node make .. -o ../installer-source.js
           cd ..
-      - name: Create GitHub release
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Upload source installer
+        uses: meeDamian/github-release@2.0
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          draft: true
-          files: |
-            installer-regular.js
-            installer-source.js
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: installer-source.js
+          allow_override: true
+          gzip: false
