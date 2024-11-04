@@ -83,3 +83,4 @@ Source version installers are made from [w93-wizard-generator](https://github.co
 
 First, clone this repo and the w93-wizard-generator repo, go to the w93-wizard-generator directory, and run `node make ../w93-yoink -o yoink-source-installer.js`.
 Once the program is done, a new file called `yoink-source-installer.js` gets made. This file doesn't require any other content, as it is standalone.
+To use the installer, open [W93](https://windows93.net) and open the console. Paste the contents of the `yoink-source-installer.js` file into the console.
